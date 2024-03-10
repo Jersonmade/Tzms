@@ -8,6 +8,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
+/**
+ * Модель ответа, содержащая информацию о товаре, которую видит пользователь
+ */
 @Data
 @Builder
 @Schema(description = "Ответ товара")

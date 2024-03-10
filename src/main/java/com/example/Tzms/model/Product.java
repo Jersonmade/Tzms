@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * Сущность продукта
+ * Модель товара системы
  */
 @Entity
 @Data

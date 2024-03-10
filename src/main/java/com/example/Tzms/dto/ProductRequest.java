@@ -9,6 +9,9 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 
+/**
+ * Модель запроса для создания или обновления товара
+ */
 @Data
 @Schema(description = "Запрос товара")
 public class ProductRequest {

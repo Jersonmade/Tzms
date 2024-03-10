@@ -12,11 +12,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Класс, отвечающий за бизнес-логику приложения
+ */
 @Service
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepo productRepo;
 
+    /**
+     * Метод для добавления товара в систему
+     * @param productRequest
+     */
     public void saveProduct(ProductRequest productRequest) {
         Product product = Product.builder()
                 .id(UUID.randomUUID())
@@ -33,6 +40,11 @@ public class ProductService {
         productRepo.save(product);
     }
 
+    /**
+     * Метод для изменения уже существующего товара
+     * @param id
+     * @param productRequest
+     */
     public void updateProduct(UUID id, ProductRequest productRequest) {
         Product product = productRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Товар с артикулом " + id + " не найден"));
@@ -48,11 +60,20 @@ public class ProductService {
         productRepo.save(product);
     }
 
+    /**
+     * Метод для получения всех товаров из бд
+     * @return
+     */
     public List<ProductResponse> getAllProducts() {
         List<Product> products = productRepo.findAll();
         return products.stream().map(this::mapToProductResponse).toList();
     }
 
+    /**
+     * Метод для получения какого-то конкретного товара
+     * @param id
+     * @return
+     */
     public ProductResponse getProductById(UUID id) {
         Product product = productRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Товар с артикулом " + id + " не найден"));
@@ -60,10 +81,19 @@ public class ProductService {
         return mapToProductResponse(product);
     }
 
+    /**
+     * Метод для удаления товара из системы
+     * @param id
+     */
     public void deleteProductByUuid(UUID id) {
         productRepo.deleteById(id);
     }
 
+    /**
+     * Метод для преобразования сущности товара в модель ответа
+     * @param product
+     * @return
+     */
     private ProductResponse mapToProductResponse(Product product) {
         return ProductResponse.builder()
                 .id(product.getId())
