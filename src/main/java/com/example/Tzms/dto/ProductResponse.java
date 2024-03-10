@@ -14,20 +14,28 @@ import java.util.UUID;
 public class ProductResponse {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private UUID id;
+
     @Schema(description = "Название товара")
     private String name;
+
     @Schema(description = "Артикул товара")
     private String article;
+
     @Schema(description = "Описание товара")
     private String description;
+
     @Schema(description = "Категория товара")
     private String category;
+
     @Schema(description = "Цена товара")
-    private BigDecimal price;
+    private Integer price;
+
     @Schema(description = "Количество товара")
-    private int quantity;
+    private Integer quantity;
+
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Date lastQuantityChange;
+
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Date createdAt;
 }

@@ -6,10 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
+/**
+ * Сущность продукта
+ */
 @Entity
 @Data
 @AllArgsConstructor
@@ -33,10 +35,10 @@ public class Product {
     private String category;
 
     @Column(nullable = false)
-    private BigDecimal price;
+    private Integer price;
 
     @Column(nullable = false)
-    private int quantity;
+    private Integer quantity;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_quantity_change")

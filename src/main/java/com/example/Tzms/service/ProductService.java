@@ -7,6 +7,7 @@ import com.example.Tzms.repository.ProductRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -28,6 +29,21 @@ public class ProductService {
                 .lastQuantityChange(new Date())
                 .createdAt(new Date())
                 .build();
+
+        productRepo.save(product);
+    }
+
+    public void updateProduct(UUID id, ProductRequest productRequest) {
+        Product product = productRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Товар с артикулом " + id + " не найден"));
+
+        product.setName(productRequest.getName());
+        product.setArticle(productRequest.getArticle());
+        product.setDescription(productRequest.getDescription());
+        product.setCategory(productRequest.getCategory());
+        product.setPrice(productRequest.getPrice());
+        product.setQuantity(productRequest.getQuantity());
+        product.setLastQuantityChange(new Date());
 
         productRepo.save(product);
     }

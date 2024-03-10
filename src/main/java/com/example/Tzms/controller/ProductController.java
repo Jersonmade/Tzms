@@ -3,6 +3,7 @@ package com.example.Tzms.controller;
 import com.example.Tzms.dto.ProductRequest;
 import com.example.Tzms.dto.ProductResponse;
 import com.example.Tzms.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,14 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveProduct(@RequestBody ProductRequest productRequest) {
+    public void saveProduct(@Valid @RequestBody ProductRequest productRequest) {
         productService.saveProduct(productRequest);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateProduct(@PathVariable UUID id, @Valid @RequestBody ProductRequest productRequest) {
+        productService.updateProduct(id, productRequest);
     }
 
     @GetMapping
