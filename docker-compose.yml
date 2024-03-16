@@ -14,7 +14,7 @@ services:
       - db-data:/var/lib/postgresql/data
     restart: always
   app:
-    image: 'tzms_img:latest'
+    image: 'jersonmade/tzms_img:latest'
     build:
       context: .
     container_name: app_container
