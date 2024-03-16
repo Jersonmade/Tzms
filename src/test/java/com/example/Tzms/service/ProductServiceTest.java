@@ -2,6 +2,7 @@ package com.example.Tzms.service;
 
 import com.example.Tzms.dto.ProductRequest;
 import com.example.Tzms.dto.ProductResponse;
+import com.example.Tzms.exception.ProductNotFoundException;
 import com.example.Tzms.model.Product;
 import com.example.Tzms.repository.ProductRepo;
 import org.junit.jupiter.api.BeforeEach;
@@ -68,10 +69,10 @@ class ProductServiceTest {
             assert savedProduct.getArticle().equals(productRequest.getArticle());
             assert savedProduct.getDescription().equals(productRequest.getDescription());
             assert savedProduct.getCategory().equals(productRequest.getCategory());
-            assert savedProduct.getPrice() == productRequest.getPrice();
-            assert savedProduct.getQuantity() == productRequest.getQuantity();
-            assert savedProduct.getLastQuantityChange() instanceof Date;
-            assert savedProduct.getCreatedAt() instanceof Date;
+            assert savedProduct.getPrice().equals(productRequest.getPrice());
+            assert savedProduct.getQuantity().equals(productRequest.getQuantity());
+            assert savedProduct.getLastQuantityChange() != null;
+            assert savedProduct.getCreatedAt() != null;
             return savedProduct;
         });
 
@@ -81,7 +82,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void updateProduct() {
+    void updateProduct() throws ProductNotFoundException {
         UUID productId = product1.getId();
 
         when(productRepo.findById(productId)).thenReturn(Optional.of(product1));
@@ -123,7 +124,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void getProductById() {
+    void getProductById() throws ProductNotFoundException {
         UUID productId = product1.getId();
 
         when(productRepo.findById(productId)).thenReturn(Optional.of(product1));

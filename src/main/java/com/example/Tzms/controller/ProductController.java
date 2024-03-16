@@ -2,6 +2,7 @@ package com.example.Tzms.controller;
 
 import com.example.Tzms.dto.ProductRequest;
 import com.example.Tzms.dto.ProductResponse;
+import com.example.Tzms.exception.ProductNotFoundException;
 import com.example.Tzms.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,10 @@ public class ProductController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateProduct(@PathVariable UUID id, @Valid @RequestBody ProductRequest productRequest) {
+    public void updateProduct(
+            @PathVariable UUID id,
+            @Valid @RequestBody ProductRequest productRequest
+    ) throws ProductNotFoundException {
         productService.updateProduct(id, productRequest);
     }
 
@@ -40,7 +44,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ProductResponse getProduct(@PathVariable UUID id) {
+    public ProductResponse getProduct(@PathVariable UUID id) throws ProductNotFoundException {
         return productService.getProductById(id);
     }
 

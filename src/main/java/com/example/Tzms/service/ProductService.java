@@ -2,12 +2,12 @@ package com.example.Tzms.service;
 
 import com.example.Tzms.dto.ProductRequest;
 import com.example.Tzms.dto.ProductResponse;
+import com.example.Tzms.exception.ProductNotFoundException;
 import com.example.Tzms.model.Product;
 import com.example.Tzms.repository.ProductRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -45,9 +45,9 @@ public class ProductService {
      * @param id
      * @param productRequest
      */
-    public void updateProduct(UUID id, ProductRequest productRequest) {
+    public void updateProduct(UUID id, ProductRequest productRequest) throws ProductNotFoundException {
         Product product = productRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Товар с артикулом " + id + " не найден"));
+                .orElseThrow(() -> new ProductNotFoundException("Товар с артикулом " + id + " не найден"));
 
         product.setName(productRequest.getName());
         product.setArticle(productRequest.getArticle());
@@ -74,9 +74,9 @@ public class ProductService {
      * @param id
      * @return
      */
-    public ProductResponse getProductById(UUID id) {
+    public ProductResponse getProductById(UUID id) throws ProductNotFoundException {
         Product product = productRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Товар с артикулом " + id + " не найден"));
+                .orElseThrow(() -> new ProductNotFoundException("Товар с артикулом " + id + " не найден"));
 
         return mapToProductResponse(product);
     }
