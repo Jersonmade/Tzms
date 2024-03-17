@@ -6,7 +6,7 @@
 >1. Склонировать к себе проект командой <br>
     `git clone https://github.com/Jersonmade/Tzms.git`
 >2. В корне проекта выполните команду <br>
-    `docker-compose up`
+    `docker-compose up -d`
 >3. Для запуска тестов выполните команду <br>
     `mvn test`
 
