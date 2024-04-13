@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
      * @param ex
      * @return
      */
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ProductNotFoundException.class)
     public Map<String, String> handleProductNotFound(ProductNotFoundException ex) {
         Map<String, String> errorMap = new HashMap<>();

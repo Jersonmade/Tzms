@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -90,8 +91,14 @@ public class ProductService {
      * Метод для удаления товара из системы
      * @param id
      */
-    public void deleteProductByUuid(UUID id) {
-        productRepo.deleteById(id);
+    public void deleteProductByUuid(UUID id) throws ProductNotFoundException {
+        Optional<Product> productToRemove = productRepo.findById(id);
+
+        if (productToRemove.isPresent()) {
+            productRepo.deleteById(id);
+        } else {
+            throw new ProductNotFoundException("Товар с артикулом " + id + " не найден");
+        }
     }
 
     /**

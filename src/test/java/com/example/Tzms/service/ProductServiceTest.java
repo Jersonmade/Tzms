@@ -142,7 +142,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void deleteProductByUuid() {
+    void deleteProductByUuid() throws ProductNotFoundException {
         UUID productId = product1.getId();
 
         when(productRepo.findById(productId)).thenReturn(Optional.of(product1));

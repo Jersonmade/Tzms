@@ -50,7 +50,7 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteProduct(@PathVariable UUID id) {
+    public void deleteProduct(@PathVariable UUID id) throws ProductNotFoundException {
         productService.deleteProductByUuid(id);
     }
 }
