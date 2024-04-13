@@ -107,7 +107,7 @@ class ProductServiceTest {
 
         when(productRepo.findAll()).thenReturn(productList);
 
-        List<ProductResponse> productResponses = productService.getAllProducts();
+        List<ProductResponse> productResponses = productService.getAllProducts(1);
 
         verify(productRepo).findAll();
 
@@ -142,7 +142,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void deleteProductByUuid() {
+    void deleteProductByUuid() throws ProductNotFoundException {
         UUID productId = product1.getId();
 
         when(productRepo.findById(productId)).thenReturn(Optional.of(product1));
