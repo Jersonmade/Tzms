@@ -6,6 +6,9 @@ import com.example.Tzms.exception.ProductNotFoundException;
 import com.example.Tzms.model.Product;
 import com.example.Tzms.repository.ProductRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -64,8 +67,10 @@ public class ProductService {
      * Метод для получения всех товаров из бд
      * @return
      */
-    public List<ProductResponse> getAllProducts() {
-        List<Product> products = productRepo.findAll();
+    public List<ProductResponse> getAllProducts(Integer page) {
+        int pageNo = page < 1 ? 0 : page - 1;
+        Pageable pageable = PageRequest.of(pageNo, 10, Sort.Direction.DESC, "createdAt");
+        List<Product> products = productRepo.findAll(pageable).getContent();
         return products.stream().map(this::mapToProductResponse).toList();
     }
 

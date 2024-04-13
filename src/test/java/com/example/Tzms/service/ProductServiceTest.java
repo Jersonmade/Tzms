@@ -107,7 +107,7 @@ class ProductServiceTest {
 
         when(productRepo.findAll()).thenReturn(productList);
 
-        List<ProductResponse> productResponses = productService.getAllProducts();
+        List<ProductResponse> productResponses = productService.getAllProducts(1);
 
         verify(productRepo).findAll();
 

@@ -38,8 +38,8 @@ public class ProductController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ProductResponse> getAllProducts() {
-        return productService.getAllProducts();
+    public List<ProductResponse> getAllProducts(@RequestParam(name = "page", defaultValue = "1") Integer page) {
+        return productService.getAllProducts(page);
     }
 
     @GetMapping("/{id}")
