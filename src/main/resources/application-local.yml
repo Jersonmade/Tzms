@@ -11,8 +11,15 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
-    database-platform: org.hibernate.dialect.H2Dialect
+#    database-platform: org.hibernate.dialect.H2Dialect
+  properties:
+    hibernate:
+      dialect: org.hibernate.dialect.H2Dialect
 
   liquibase:
     change-log: classpath:db/changelog.xml
     enabled: false
+
+data:
+  initialization:
+    enabled: true

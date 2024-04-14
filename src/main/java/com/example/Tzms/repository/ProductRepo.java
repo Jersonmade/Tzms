@@ -12,5 +12,5 @@ import java.util.UUID;
  */
 @Repository
 public interface ProductRepo extends JpaRepository<Product, UUID> {
-    Optional<Product> findByArticle(String article);
+    Boolean existsByArticle(String article);
 }

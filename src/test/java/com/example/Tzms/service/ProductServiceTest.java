@@ -2,6 +2,7 @@ package com.example.Tzms.service;
 
 import com.example.Tzms.dto.ProductRequest;
 import com.example.Tzms.dto.ProductResponse;
+import com.example.Tzms.exception.DuplicateArticleException;
 import com.example.Tzms.exception.ProductNotFoundException;
 import com.example.Tzms.model.Product;
 import com.example.Tzms.repository.ProductRepo;
@@ -30,7 +31,6 @@ class ProductServiceTest {
         MockitoAnnotations.openMocks(this);
 
         this.product1 = new Product();
-        product1.setId(UUID.randomUUID());
         product1.setName("Product 1");
         product1.setArticle("123456");
         product1.setDescription("Description for Product 1");
@@ -41,7 +41,6 @@ class ProductServiceTest {
         product1.setCreatedAt(new Date());
 
         this.product2 = new Product();
-        product2.setId(UUID.randomUUID());
         product2.setName("Product 2");
         product2.setArticle("789012");
         product2.setDescription("Description for Product 2");
@@ -61,7 +60,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void saveProduct() {
+    void saveProduct() throws DuplicateArticleException {
         when(productRepo.save(any(Product.class))).thenAnswer(invocationOnMock -> {
             Product savedProduct = invocationOnMock.getArgument(0);
             assert savedProduct.getId() != null;

@@ -1,5 +1,6 @@
 package com.example.Tzms.advice;
 
+import com.example.Tzms.exception.DuplicateArticleException;
 import com.example.Tzms.exception.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -43,6 +44,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ProductNotFoundException.class)
     public Map<String, String> handleProductNotFound(ProductNotFoundException ex) {
         Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("error message", ex.getMessage());
+        return errorMap;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(DuplicateArticleException.class)
+    public Map<String, String> handleDuplicateArticle(DuplicateArticleException ex) {
+        Map<String, String > errorMap = new HashMap<>();
         errorMap.put("error message", ex.getMessage());
         return errorMap;
     }

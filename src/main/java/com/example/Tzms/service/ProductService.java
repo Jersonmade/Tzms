@@ -2,25 +2,29 @@ package com.example.Tzms.service;
 
 import com.example.Tzms.dto.ProductRequest;
 import com.example.Tzms.dto.ProductResponse;
+import com.example.Tzms.exception.DuplicateArticleException;
 import com.example.Tzms.exception.ProductNotFoundException;
 import com.example.Tzms.model.Product;
 import com.example.Tzms.repository.ProductRepo;
+import com.github.javafaker.Faker;
+import jakarta.annotation.PostConstruct;
+import jakarta.persistence.PersistenceException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Класс, отвечающий за бизнес-логику приложения
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ProductService {
     private final ProductRepo productRepo;
 
@@ -28,9 +32,12 @@ public class ProductService {
      * Метод для добавления товара в систему
      * @param productRequest
      */
-    public void saveProduct(ProductRequest productRequest) {
+    public void saveProduct(ProductRequest productRequest) throws DuplicateArticleException {
+        if (productRepo.existsByArticle(productRequest.getArticle())) {
+            throw new DuplicateArticleException("Данный артикул уже существует: " + productRequest.getArticle());
+        }
+
         Product product = Product.builder()
-                .id(UUID.randomUUID())
                 .name(productRequest.getName())
                 .article(productRequest.getArticle())
                 .description(productRequest.getDescription())

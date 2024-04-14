@@ -12,11 +12,20 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+  properties:
+    hibernate:
+      format_sql: true
+      dialect: org.hibernate.dialect.PostgreSQLDialect
 
   liquibase:
     change-log: classpath:db/changelog.xml
+    enabled: true
+
+app:
+  scheduling:
+    enabled: true
+    optimization: false
+
+data:
+  initialization:
     enabled: true

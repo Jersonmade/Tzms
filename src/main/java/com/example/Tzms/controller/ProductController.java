@@ -2,6 +2,7 @@ package com.example.Tzms.controller;
 
 import com.example.Tzms.dto.ProductRequest;
 import com.example.Tzms.dto.ProductResponse;
+import com.example.Tzms.exception.DuplicateArticleException;
 import com.example.Tzms.exception.ProductNotFoundException;
 import com.example.Tzms.service.ProductService;
 import jakarta.validation.Valid;
@@ -23,7 +24,7 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveProduct(@Valid @RequestBody ProductRequest productRequest) {
+    public void saveProduct(@Valid @RequestBody ProductRequest productRequest) throws DuplicateArticleException {
         productService.saveProduct(productRequest);
     }
 
