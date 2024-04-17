@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
@@ -37,7 +38,7 @@ public class Product {
     private String category;
 
     @Column(nullable = false)
-    private Integer price;
+    private BigDecimal price;
 
     @Column(nullable = false)
     private Integer quantity;

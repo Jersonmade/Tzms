@@ -31,7 +31,7 @@ public class ProductResponse {
     private String category;
 
     @Schema(description = "Цена товара")
-    private Integer price;
+    private BigDecimal price;
 
     @Schema(description = "Количество товара")
     private Integer quantity;

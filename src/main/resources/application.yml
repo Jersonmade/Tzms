@@ -5,7 +5,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/tzms
     username: postgres
-    password: ${PWD}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -24,8 +24,5 @@ spring:
 app:
   scheduling:
     enabled: true
-    optimization: false
-
-data:
-  initialization:
-    enabled: true
+    optimization: true
+    period: 360000

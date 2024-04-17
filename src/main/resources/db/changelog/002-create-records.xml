@@ -7,16 +7,16 @@
     <changeSet id="2" author="Jersonmade">
         <sql>INSERT INTO _product (id, name, article, description, category, price, quantity, last_quantity_change, created_at)
             SELECT
-            uuid_generate_v4(),
+            gen_random_uuid(),
             'Product ' || gs,
             'Article ' || gs,
             'Description of product ' || gs,
             'Category ' || gs,
-            FLOOR(RANDOM() * 1000),
-            FLOOR(RANDOM() * 100),
+            100,
+            10,
             NOW(),
             NOW()
-            FROM generate_series(1, 100000) gs;
+            FROM generate_series(1, 10000) gs;
         </sql>
     </changeSet>
 

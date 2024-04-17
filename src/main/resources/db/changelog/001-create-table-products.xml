@@ -21,7 +21,7 @@
             <column name="category" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="price" type="int">
+            <column name="price" type="NUMERIC">
                 <constraints nullable="false"/>
             </column>
             <column name="quantity" type="int">

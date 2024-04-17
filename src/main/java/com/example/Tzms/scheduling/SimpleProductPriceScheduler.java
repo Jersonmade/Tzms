@@ -1,47 +1,54 @@
 package com.example.Tzms.scheduling;
 
+import com.example.Tzms.aop.MethodTimer;
 import com.example.Tzms.model.Product;
 import com.example.Tzms.repository.ProductRepo;
 import com.example.Tzms.service.ProductService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Profile;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.Duration;
 import java.util.List;
+import java.time.Instant;
 import java.util.stream.Collectors;
 
 @Component
-@ConditionalOnExpression("'${app.scheduling.enabled}'=='true' && '${app.scheduling.optimization}'=='false' && ('${spring.profiles.active}' != 'local')")
+@ConditionalOnExpression("'${app.scheduling.enabled}'=='true' && '${app.scheduling.optimization}'=='false'")
+@Profile("!local")
+@ConditionalOnMissingBean(name = "OptimizedProductPriceScheduling")
 @Slf4j
 @RequiredArgsConstructor
 public class SimpleProductPriceScheduler {
 
     private final ProductRepo productRepo;
 
-    @PostConstruct
-    public void init() {
-        log.info("Scheduler started working");
-    }
 
-    @PreDestroy
-    public void destroy() {
-        log.info("Scheduler finished working");
-    }
-
-    @Scheduled(fixedDelay = 360000)
+    @MethodTimer
+    @Scheduled(fixedRateString = "${app.scheduling.period}")
     @Transactional
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     public void updateProductPrice() {
+        System.out.println("Start simple scheduling");
+
         List<Product> products = productRepo.findAll();
-        List<Product> updatedProducts = products.stream()
-                .peek(product -> product.setPrice(product.getPrice() + 10))
-                .toList();
+        products.forEach(product -> {
+            BigDecimal increase = new BigDecimal("1.1");
+            product.setPrice(product.getPrice().multiply(increase));
+        });
 
         productRepo.saveAll(products);
     }
+    
 
 }
