@@ -3,10 +3,12 @@ package com.example.Tzms.scheduling;
 import com.example.Tzms.aop.MethodTimer;
 import com.example.Tzms.model.Product;
 import com.example.Tzms.repository.ProductRepo;
+import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +32,9 @@ public class OptimizedProductPriceScheduling {
     @MethodTimer
     @Scheduled(fixedDelay = 360000)
     @Transactional
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     public void scheduleFixedDelayTask() {
+
         System.out.println("Optimized scheduler start");
         List<Product> products = productRepo.findAll();
 

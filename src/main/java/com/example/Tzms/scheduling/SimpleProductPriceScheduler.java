@@ -3,9 +3,6 @@ package com.example.Tzms.scheduling;
 import com.example.Tzms.aop.MethodTimer;
 import com.example.Tzms.model.Product;
 import com.example.Tzms.repository.ProductRepo;
-import com.example.Tzms.service.ProductService;
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
 import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,13 +15,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.Duration;
 import java.util.List;
-import java.time.Instant;
-import java.util.stream.Collectors;
 
 @Component
-@ConditionalOnExpression("'${app.scheduling.enabled}'=='true' && '${app.scheduling.optimization}'=='false'")
 @Profile("!local")
 @ConditionalOnMissingBean(name = "OptimizedProductPriceScheduling")
 @Slf4j

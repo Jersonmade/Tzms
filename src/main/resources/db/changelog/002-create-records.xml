@@ -16,7 +16,7 @@
             10,
             NOW(),
             NOW()
-            FROM generate_series(1, 10000) gs;
+            FROM generate_series(1, 100000) gs;
         </sql>
     </changeSet>
 

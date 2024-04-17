@@ -24,5 +24,5 @@ spring:
 app:
   scheduling:
     enabled: true
-    optimization: true
+    optimization: false
     period: 360000
