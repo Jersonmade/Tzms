@@ -19,7 +19,8 @@ import java.util.List;
 
 @Component
 @Profile("!local")
-@ConditionalOnMissingBean(name = "OptimizedProductPriceScheduling")
+@ConditionalOnExpression("'${app.scheduling.enabled}'=='true' && '${app.scheduling.optimization}'=='false'")
+//@ConditionalOnMissingBean(name = "OptimizedProductPriceScheduling")
 @Slf4j
 @RequiredArgsConstructor
 public class SimpleProductPriceScheduler {
