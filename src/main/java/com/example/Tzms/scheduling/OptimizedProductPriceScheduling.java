@@ -55,24 +55,6 @@ public class OptimizedProductPriceScheduling {
         System.out.println("Optimized scheduler start");
         List<Product> products = productRepo.findAll();
 
-        String updateQuery = "UPDATE _product SET price = price * 1.1 WHERE id = ?";
-
-//        try (Connection connection = dataSource.getConnection();
-//             PreparedStatement statement = connection.prepareStatement(updateQuery)) {
-//
-//            for (Product product : products) {
-//                statement.setObject(1, product.getId());
-//                statement.addBatch();
-//            }
-//
-//            statement.executeBatch();
-//
-//            writeDataToFile(products);
-//
-//        } catch (SQLException e) {
-//            log.error("Error occurred while updating prices.", e);
-//        }
-
         try (Connection connection = dataSource.getConnection();
              PrintWriter writer = new PrintWriter(new FileWriter("products.txt"))) {
             PreparedStatement ps = connection.prepareStatement("UPDATE _product SET price = price * 1.1 WHERE id = ?");
