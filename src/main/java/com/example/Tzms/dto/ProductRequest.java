@@ -34,7 +34,7 @@ public class ProductRequest {
     @Schema(description = "Цена товара")
     @NotNull(message = "Price is mandatory")
     @Positive(message = "Price must be positive")
-    private Integer price;
+    private BigDecimal price;
 
     @Schema(description = "Количество товара")
     @NotNull(message = "Quantity is mandatory")
