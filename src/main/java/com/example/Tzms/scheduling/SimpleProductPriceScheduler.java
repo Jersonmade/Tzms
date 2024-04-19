@@ -7,7 +7,6 @@ import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,7 +19,6 @@ import java.util.List;
 @Component
 @Profile("!local")
 @ConditionalOnExpression("'${app.scheduling.enabled}'=='true' && '${app.scheduling.optimization}'=='false'")
-//@ConditionalOnMissingBean(name = "OptimizedProductPriceScheduling")
 @Slf4j
 @RequiredArgsConstructor
 public class SimpleProductPriceScheduler {
@@ -31,7 +29,7 @@ public class SimpleProductPriceScheduler {
     @MethodTimer
     @Scheduled(fixedRateString = "${app.scheduling.period}")
     @Transactional
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Lock(LockModeType.PESSIMISTIC_READ)
     public void updateProductPrice() {
         System.out.println("Start simple scheduling");
 
@@ -43,6 +41,6 @@ public class SimpleProductPriceScheduler {
 
         productRepo.saveAll(products);
     }
-    
+
 
 }

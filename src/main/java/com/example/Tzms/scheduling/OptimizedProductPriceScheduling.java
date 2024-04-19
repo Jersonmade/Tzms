@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
-import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,18 +32,6 @@ public class OptimizedProductPriceScheduling {
 
     private final ProductRepo productRepo;
     private final DataSource dataSource;
-
-    private void writeDataToFile(List<Product> products) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("products.txt"))) {
-            for (Product product : products) {
-                writer.write(product.toString());
-                writer.newLine();
-            }
-            log.info("Data has been written to the file.");
-        } catch (IOException e) {
-            log.error("Error occurred while writing data to the file.", e);
-        }
-    }
 
     @MethodTimer
     @Scheduled(fixedRateString = "${app.scheduling.period}")
