@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  db:
+    ports:
+      - "5432:5432"
+    container_name: pgsql_container
+    image: postgres
+    environment:
+      - POSTGRES_DB=tzms
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    restart: always
+  app:
+    image: 'jersonmade/tzms_img:latest'
+    build:
+      context: .
+    container_name: app_container
+    ports:
+      - "8004:8004"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/tzms
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    restart: always
+
+volumes:
+  db-data:
